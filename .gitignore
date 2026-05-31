@@ -1,0 +1,9 @@
+# Generated data (run setup.py to regenerate)
+data/
+downloads/
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+*.egg-info/

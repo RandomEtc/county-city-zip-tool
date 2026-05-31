@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Colorado ZIP Code Finder</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <div id="app">
+    <div id="sidebar">
+      <h1>Colorado ZIP Finder</h1>
+      <p class="subtitle">Find ZIP codes by county or city for mailing outreach.</p>
+
+      <div id="search-container">
+        <input id="search-input" type="text" placeholder="Type a county or city name..." autocomplete="off"/>
+        <ul id="suggestions" style="display:none"></ul>
+      </div>
+
+      <div id="result-info" style="display:none">
+        <div class="result-name" id="result-name"></div>
+        <div class="result-type" id="result-type"></div>
+        <div class="result-summary" id="result-summary"></div>
+      </div>
+
+      <div id="empty-state">
+        <p>Search for a Colorado county (e.g. "Boulder County") or city (e.g. "Fort Collins") to see matching ZIP codes.</p>
+        <p class="disclaimer">ZIP codes shown are ZCTAs — Census approximations of USPS delivery areas. Boundaries may not match exactly.</p>
+      </div>
+
+      <div id="legend" style="display:none">
+        <div class="legend-title">ZCTA Coverage</div>
+        <div class="legend-items">
+          <div class="legend-item"><span class="swatch" style="background:#084594"></span> 90–100%</div>
+          <div class="legend-item"><span class="swatch" style="background:#2171b5"></span> 70–90%</div>
+          <div class="legend-item"><span class="swatch" style="background:#4292c6"></span> 50–70%</div>
+          <div class="legend-item"><span class="swatch" style="background:#9ecae1"></span> 30–50%</div>
+          <div class="legend-item"><span class="swatch" style="background:#deebf7"></span> 10–30%</div>
+        </div>
+        <p class="legend-note">Coverage = fraction of ZCTA area inside selected boundary.</p>
+      </div>
+
+      <div id="sidebar-footer">
+        <button id="clear-btn" style="display:none">✕ Clear selection</button>
+      </div>
+    </div>
+
+    <div id="main">
+      <div id="map"></div>
+
+      <div id="zip-panel" style="display:none">
+        <div id="zip-panel-header">
+          <h2 id="zip-panel-title"></h2>
+          <div id="zip-panel-counts"></div>
+        </div>
+        <div id="zip-panel-body">
+          <div id="zip-text-section">
+            <div id="copy-tabs">
+              <button class="copy-tab active" data-fmt="list">List</button>
+              <button class="copy-tab" data-fmt="regex">Regex</button>
+              <button class="copy-tab" data-fmt="rows">Rows</button>
+              <button class="copy-tab" data-fmt="cols">Columns</button>
+            </div>
+            <div id="zip-text-output"></div>
+            <div id="copy-actions">
+              <button id="copy-btn">Copy All</button>
+              <button id="copy-primary-btn">Copy Primary</button>
+              <div id="copy-feedback" style="display:none">Copied!</div>
+            </div>
+          </div>
+          <div id="zip-table-section">
+            <div class="section-label">Detail by ZCTA:</div>
+            <div id="zip-table-wrapper">
+              <table id="zip-table">
+                <thead>
+                  <tr>
+                    <th>ZIP</th>
+                    <th title="Fraction of this ZCTA's area that falls inside the selected boundary">ZCTA Coverage ▾</th>
+                    <th title="Fraction of the selected boundary's area covered by this ZCTA">Area Coverage</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tbody id="zip-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="map-hover-tip"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
