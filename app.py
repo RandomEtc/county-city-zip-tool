@@ -5,11 +5,19 @@ import json
 import os
 from pathlib import Path
 
-from flask import Flask, jsonify, render_template, request, send_from_directory
+from flask import Flask, jsonify, redirect, render_template, request, send_from_directory
 
 DATA_DIR = Path(__file__).parent / "data"
 
 app = Flask(__name__)
+
+CANONICAL_HOST = os.environ.get("CANONICAL_HOST", "")
+
+@app.before_request
+def enforce_canonical_host():
+    if CANONICAL_HOST and request.host != CANONICAL_HOST:
+        url = request.url.replace(request.host, CANONICAL_HOST, 1)
+        return redirect(url, code=301)
 
 # Load lookup data into memory at startup
 def _load(name):

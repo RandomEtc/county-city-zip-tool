@@ -6,6 +6,9 @@
 app = 'county-city-zip-tool'
 primary_region = 'dfw'
 
+[env]
+  CANONICAL_HOST = "citycountyzip.randometc.org"
+
 [build]
 
 [http_service]
