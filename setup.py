@@ -187,6 +187,42 @@ def main():
         json.dump(index, f)
     print(f"  Saved search_index.json ({len(index)} entries)")
 
+    # 9. Build ZCTA labels (zip → best city + county for tooltip display)
+    print("\nStep 10: Building ZCTA labels")
+    # Incorporated cities only (CLASSFP == 'C1')
+    incorporated = set(places_proj[places_proj["CLASSFP"] == "C1"]["NAME"].str.strip())
+
+    # For each ZCTA track best county and best city by zcta_coverage
+    zcta_county: dict[str, tuple[str, float]] = {}  # zip → (county_name, score)
+    for _, data in county_overlaps.items():
+        for z in data["zips"]:
+            code, score = z["zip"], z["zcta_coverage"]
+            if code not in zcta_county or score > zcta_county[code][1]:
+                zcta_county[code] = (data["display_name"], score)
+
+    zcta_city: dict[str, tuple[str, float]] = {}  # zip → (city_name, score)
+    for _, data in place_overlaps.items():
+        if data["display_name"] not in incorporated:
+            continue
+        for z in data["zips"]:
+            code, score = z["zip"], z["zcta_coverage"]
+            if code not in zcta_city or score > zcta_city[code][1]:
+                zcta_city[code] = (data["display_name"], score)
+
+    zcta_labels = {}
+    all_zips = set(zcta_county) | set(zcta_city)
+    for code in all_zips:
+        entry: dict = {}
+        if code in zcta_city:
+            entry["city"] = zcta_city[code][0]
+        if code in zcta_county:
+            entry["county"] = zcta_county[code][0]
+        zcta_labels[code] = entry
+
+    with open(DATA_DIR / "zcta_labels.json", "w") as f:
+        json.dump(zcta_labels, f)
+    print(f"  Saved zcta_labels.json ({len(zcta_labels)} ZCTAs)")
+
     print("\n=== Setup complete! Run: python app.py ===")
 
 
