@@ -4,7 +4,7 @@ Interactive map tool for finding ZIP codes that approximate Colorado county and 
 
 Search for any Colorado county or incorporated city, see the matching ZCTAs (Census ZIP Code Tabulation Areas) highlighted on the map with coverage percentages, and copy the ZIP codes in your preferred format.
 
-![Screenshot placeholder](https://github.com/RandomEtc/county-city-zip-tool)
+![Screenshot showing Denver County selected with ZIP choropleth and copy panel](docs/screenshot.png)
 
 ## Features
 
