@@ -1,0 +1,10 @@
+downloads/
+data/
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+.git/
+docs/
+transcript.md

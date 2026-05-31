@@ -23,7 +23,16 @@ Search for any Colorado county or incorporated city, see the matching ZCTAs (Cen
 - **2020 ZCTA vintage** — ZCTA geometries are from the 2020 Census. County boundaries are also 2020; city (place) boundaries are from TIGER 2025.
 - **Overlap threshold** — a ZCTA is included if ≥10% of the ZCTA's area falls inside the boundary, OR if the ZCTA covers ≥10% of the boundary's area. The second condition ensures large ZCTAs that straddle small cities are included.
 
-## Setup
+## Deployment (fly.io)
+
+```bash
+fly launch --no-deploy   # first time only — imports fly.toml
+fly deploy               # builds image, runs setup.py, deploys
+```
+
+The Docker build runs `setup.py` automatically (~3 min, downloads ~80MB of Census data). Subsequent deploys use Docker layer cache so only code changes trigger a fast rebuild.
+
+## Local Setup
 
 ### 1. Install dependencies
 
