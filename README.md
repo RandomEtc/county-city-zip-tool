@@ -73,6 +73,10 @@ python app.py
 
 Then open [http://localhost:5000](http://localhost:5000).
 
+## License
+
+This project is released into the public domain under the [Unlicense](LICENSE). The underlying Census data is also public domain (US federal government work).
+
 ## Data Sources
 
 | Dataset | Source | Vintage |
